@@ -57,19 +57,26 @@
 
             days["Monday"] = [{
                 inTime: +new Date(),
-                        outTime: +new Date() + (60*60)
+                outTime: +new Date() + (60*60)
             }]
+            
+            // $(document).ready(function(){
+            //     refreshView();
+            // });
 
             $('.list-group-item').on('click', function(){
+                toggleActive($(this));
+                refreshView();
+            });
+
+
+
+            function toggleActive(item) {
                 $('#day-list a').removeClass('active');
                 index = $(this).text();
 
-                console.log(days);
-
-                clearTimeView();
-                addTimesView();
-                $(this).addClass('active');
-            });
+                item.addClass('active');
+            }
 
             $('#add-time-btn').on('click', function(){
                 if(typeof(days[index]) !== "object"){
@@ -82,6 +89,11 @@
                 
                 $('time-list').append("")
             });
+
+            function refreshView() {
+                clearTimeView();
+                addTimesView();
+            }
 
             function clearTimeView() {
                 timeHandler.empty();
