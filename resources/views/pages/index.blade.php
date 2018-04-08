@@ -43,6 +43,9 @@
                     <div class="btn circle-btn text-center" id="add-time-btn">+</div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">Total: </div>
+            </div>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -59,10 +62,10 @@
                 inTime: +new Date(),
                 outTime: +new Date() + (60*60)
             }]
-            
-            // $(document).ready(function(){
-            //     refreshView();
-            // });
+
+            $(document).ready(function(){
+                refreshView();
+            });
 
             $('.list-group-item').on('click', function(){
                 toggleActive($(this));
@@ -73,7 +76,9 @@
 
             function toggleActive(item) {
                 $('#day-list a').removeClass('active');
-                index = $(this).text();
+
+                //Set the index so we know what day we are on
+                index = item.text();
 
                 item.addClass('active');
             }
@@ -86,8 +91,10 @@
                     inTime: +new Date(),
                     outTime: +new Date() + (1000 * 60 * 60)
                 });
-                
+
                 $('time-list').append("")
+
+                refreshView()
             });
 
             function refreshView() {
@@ -109,12 +116,18 @@
 
                         let h = formattedDate.getHours();
                         let m = formattedDate.getMinutes();
-                        
+
 
                         timeHandler.append("<div> IN:" + new Date(el.inTime) + "</div> <div>OUT: " + new Date(el.outTime) + "</div>")
                     })
                 }
             }
+
+            function createTimeInput(parent){
+                
+            }
+
+
         </script>
     </body>
 </html>
