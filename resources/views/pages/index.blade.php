@@ -22,27 +22,10 @@
     <body>
         <div id="app" class="container">
             <h1 class="display-4 text-center">Simple Punchcard</h1>
-            <excomp></excomp>
 
             <div class="row">
-                <div class="col-3 text-center" style="border-right: 1px solid #000">
-                    <h4 class="display-5">Days</h4>
-                    <div class="list-group" id="day-list">
-                        <a href="#sunday" class="list-group-item active">Sunday</a>
-                        <a href="#monday" class="list-group-item">Monday</a>
-                        <a href="#tuesday" class="list-group-item">Tuesday</a>
-                        <a href="#wednesday" class="list-group-item">Wednesday</a>
-                        <a href="#thursday" class="list-group-item">Thursday</a>
-                        <a href="#friday" class="list-group-item">Friday</a>
-                        <a href="#saturday" class="list-group-item">Saturday</a>
-                    </div>
-                </div>
-                <div class="col-9  text-center">
-                    <h4 class="display-5">Times</h4>
-                    <div id="time-list">
-                    </div>
-                    <div class="btn circle-btn text-center" id="add-time-btn">+</div>
-                </div>
+                <Days/>
+                <!-- <TimeInput></TimeInput> -->
             </div>
             <div class="row">
                 <div class="col-12">Total: </div>

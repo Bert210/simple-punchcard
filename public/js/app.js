@@ -11076,6 +11076,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.Vue = __webpack_require__(1);
 
 Vue.component('excomp', __webpack_require__(9));
+Vue.component('Days', __webpack_require__(18));
+// Vue.component('TimeInput', require('../components/TimeInput.vue'));
 
 var app = new Vue({
   el: '#app',
@@ -11090,15 +11092,16 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules__ = __webpack_require__(26);
 
 
 
-// import modules from './modules'
+
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-  modules: modules,
+  modules: __WEBPACK_IMPORTED_MODULE_2__modules__["default"],
   strict: "development" !== 'production'
 }));
 
@@ -12699,6 +12702,353 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(10)
+/* script */
+var __vue_script__ = __webpack_require__(19)
+/* template */
+var __vue_template__ = __webpack_require__(20)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/components/Days.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-623cd8fc", Component.options)
+  } else {
+    hotAPI.reload("data-v-623cd8fc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Day__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Day___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Day__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            // activeDay: 1,
+            days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        };
+    },
+    computed: {
+        activeDay: {
+            get: function get() {
+                return this.$store.state.Day.activeDay;
+            }
+        }
+    },
+    components: { Day: __WEBPACK_IMPORTED_MODULE_0__Day___default.a },
+    methods: {
+        echo: function echo(data) {
+            this.activeDay = data;
+        }
+    }
+});
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "col-3 text-center",
+      staticStyle: { "border-right": "1px solid #000" }
+    },
+    [
+      _c("h4", { staticClass: "display-5" }, [_vm._v("Days")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "list-group", attrs: { id: "day-list" } },
+        [
+          _vm._v("\n          " + _vm._s(_vm.activeDay) + "\n          "),
+          _vm._l(_vm.days, function(day, index) {
+            return _c(
+              "Day",
+              {
+                key: day,
+                staticClass: "list-group-item",
+                attrs: { index: index },
+                on: {
+                  test: function($event) {
+                    _vm.echo($event)
+                  }
+                }
+              },
+              [_vm._v("\n              " + _vm._s(day) + "\n          ")]
+            )
+          })
+        ],
+        2
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-623cd8fc", module.exports)
+  }
+}
+
+/***/ }),
+/* 21 */,
+/* 22 */,
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(10)
+/* script */
+var __vue_script__ = __webpack_require__(24)
+/* template */
+var __vue_template__ = __webpack_require__(25)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/components/Day.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7eebe907", Component.options)
+  } else {
+    hotAPI.reload("data-v-7eebe907", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['index'],
+    computed: {
+        dayIndex: function dayIndex() {
+            if (this.index !== null) {
+                return this.index;
+            }
+
+            return 'error';
+        },
+        isActive: function isActive() {
+            return this.$store.state.Day.activeDay === this.dayIndex;
+        }
+    },
+    methods: {
+        echo: function echo() {
+            //   this.$emit('test', this.dayIndex);
+            this.$store.commit('setActiveDay', this.dayIndex);
+        }
+    }
+});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: { active: _vm.isActive },
+      on: {
+        click: function($event) {
+          _vm.echo()
+        }
+      }
+    },
+    [_vm._t("default")],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7eebe907", module.exports)
+  }
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/**
+ * The file enables `@/store/index.js` to import all vuex modules
+ * in a one-shot manner. There should not be any reason to edit this file.
+ */
+
+var files = __webpack_require__(27);
+var modules = {};
+
+files.keys().forEach(function (key) {
+  if (key === './index.js') return;
+  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default;
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (modules);
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./Day.js": 28,
+	"./index.js": 26
+};
+function webpackContext(req) {
+	return __webpack_require__(webpackContextResolve(req));
+};
+function webpackContextResolve(req) {
+	var id = map[req];
+	if(!(id + 1)) // check for number or string
+		throw new Error("Cannot find module '" + req + "'.");
+	return id;
+};
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 27;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var state = {
+  activeDay: 0
+};
+
+var mutations = {
+  // addFile (state, file) {
+  //   state.list.push(file)
+  // },
+  setActiveDay: function setActiveDay(state, dayIndex) {
+    state.activeDay = dayIndex;
+  }
+};
+
+var actions = {
+  // someAsyncTask ({ commit }) {
+  //   // do something async
+  //   commit('INCREMENT_MAIN_COUNTER')
+  // }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  mutations: mutations,
+  actions: actions
+});
 
 /***/ })
 /******/ ]);
