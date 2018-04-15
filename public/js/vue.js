@@ -30,7 +30,6 @@ export default {
   <div class="col-3 text-center" style="border-right: 1px solid #000">
         <h4 class="display-5">Days</h4>
         <div class="list-group" id="day-list">
-            {{ activeDay }}
             <Day 
                 class="list-group-item" 
                 v-for='(day, index) in days' 
@@ -67,20 +66,23 @@ export default {
 </script>
 
 <template>
-    <div>
-        {{ message }}
-    </div>
+  <span>{{ days[dayIndex] }}</span>
 </template>
 
 <script>
-    export default {
-        data () {
-            return({
-                message: "hello"
-            })
-        }
+export default {
+  data: function () {
+    return ({
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    })
+  },
+  computed: {
+    dayIndex: {
+      get() {
+        return this.$store.state.Day.activeDay;
+      }
     }
+  }
+}
 </script>
-<template>
-  <span>Hello</span>
-</template>
+

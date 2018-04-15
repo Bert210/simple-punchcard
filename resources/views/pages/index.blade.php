@@ -24,8 +24,8 @@
             <h1 class="display-4 text-center">Simple Punchcard</h1>
 
             <div class="row">
-                <Days/>
-                <!-- <TimeInput></TimeInput> -->
+                <Days></Days>
+                <Times></Times>
             </div>
             <div class="row">
                 <div class="col-12">Total: </div>
@@ -36,82 +36,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="js/app.js"></script>
-        <!--
-        <script>
-            let index = "Sunday";
-            let days = [];
-
-            days["Monday"] = [{
-                inTime: +new Date(),
-                outTime: +new Date() + (60*60)
-            }]
-
-            $(document).ready(function(){
-                refreshView();
-            });
-
-            $('.list-group-item').on('click', function(){
-                toggleActive($(this));
-                refreshView();
-            });
-
-
-
-            function toggleActive(item) {
-                $('#day-list a').removeClass('active');
-
-                //Set the index so we know what day we are on
-                index = item.text();
-
-                item.addClass('active');
-            }
-
-            $('#add-time-btn').on('click', function(){
-                if(typeof(days[index]) !== "object"){
-                    days[index] = [];
-                }
-                days[index].push({
-                    inTime: +new Date(),
-                    outTime: +new Date() + (1000 * 60 * 60)
-                });
-
-                $('time-list').append("")
-
-                refreshView()
-            });
-
-            function refreshView() {
-                clearTimeView();
-                addTimesView();
-            }
-
-            function clearTimeView() {
-                timeHandler.empty();
-            }
-
-            function addTimesView(){
-
-                if(typeof(days[index]) !== "object"){
-                    timeHandler.append("<p>Add a time to get started!</p>");
-                }else {
-                    days[index].forEach(function(el){
-                        var formattedDate = new Date(el.inTime);
-
-                        let h = formattedDate.getHours();
-                        let m = formattedDate.getMinutes();
-
-
-                        timeHandler.append("<div> IN:" + new Date(el.inTime) + "</div> <div>OUT: " + new Date(el.outTime) + "</div>")
-                    })
-                }
-            }
-
-            function createTimeInput(parent){
-                
-            }
-
-
-        </script>
-        -->
     </body>
 </html>
