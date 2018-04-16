@@ -22,10 +22,11 @@
     <body>
         <div id="app" class="container">
             <h1 class="display-4 text-center">Simple Punchcard</h1>
+            <div style="height: 1px; background-color: black;"></div>
 
             <div class="row">
                 <Days></Days>
-                <Times></Times>
+                <time-view></time-view>
             </div>
             <div class="row">
                 <div class="col-12">Total: </div>
