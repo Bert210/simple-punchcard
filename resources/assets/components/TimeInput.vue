@@ -1,6 +1,6 @@
 <template>
     <span class="wrapper">
-        <input class="time-input" type="number" v-model="hours" @change="updateHour">
+        <input class="time-input" type="number" :value="hours">
         <input class="time-input" type="number" :value="minutes">
         <span class="ampm" @click="toggleAMPM()">{{ AMPM }}</span>
     </span>
@@ -25,7 +25,8 @@ export default {
               return hour;
           },
           set (e) {
-              return e;
+            console.log(e);
+            //   return this.$store.commit('updateTime', e);
           }
       },
       minutes: {

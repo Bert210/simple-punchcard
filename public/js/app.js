@@ -11195,7 +11195,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(23)
 /* template */
-var __vue_template__ = __webpack_require__(27)
+var __vue_template__ = __webpack_require__(32)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -11238,7 +11238,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(6);
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(34);
 
 
 /***/ }),
@@ -12752,6 +12752,9 @@ var mutations = {
   createNewTime: function createNewTime(state, data) {
     data.id = ++state.currentID;
     state.times.push(data);
+  },
+  updateTime: function updateTime(state, data) {
+    console.log(data);
   }
 };
 
@@ -13036,7 +13039,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(22)
 /* template */
-var __vue_template__ = __webpack_require__(28)
+var __vue_template__ = __webpack_require__(33)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13174,13 +13177,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(45)
+  __webpack_require__(25)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(25)
+var __vue_script__ = __webpack_require__(30)
 /* template */
-var __vue_template__ = __webpack_require__(40)
+var __vue_template__ = __webpack_require__(31)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -13220,138 +13223,46 @@ module.exports = Component.exports
 
 /***/ }),
 /* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['time'],
-    data: function data() {
-        return {
-            AMPM: 'AM'
-        };
-    },
-
-    computed: {
-        hours: {
-            get: function get() {
-                var hour = Math.floor(this.time / 60);
-                if (hour > 12) {
-                    this.toggleAMPM();
-                    hour -= 12;
-                }
-                return hour;
-            },
-            set: function set(e) {
-                return e;
-            }
-        },
-        minutes: {
-            get: function get() {
-                return Math.round(this.time % 60);
-            }
-        }
-    },
-
-    methods: {
-        toggleAMPM: function toggleAMPM() {
-            if (this.AMPM === 'AM') {
-                this.AMPM = 'PM';
-            } else {
-                this.AMPM = 'AM';
-            }
-        },
-        updateHour: function updateHour() {
-            console.log("Updating hour");
-            //   this.$store.commit('');
-        }
-    }
-});
+// load the styles
+var content = __webpack_require__(26);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(28)("10ba54c1", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34866fa8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TimeInput.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34866fa8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TimeInput.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
-/* 26 */,
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(27)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nwrapper[data-v-34866fa8] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.time-input[data-v-34866fa8] {\n  width: 4rem;\n}\n.ampm[data-v-34866fa8] {\n  cursor: pointer;\n  padding: 3px 6px;\n}\n.ampm[data-v-34866fa8]:hover {\n    background-color: gray;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("time-input", { attrs: { time: this.time.inTime } }),
-      _vm._v(" -> "),
-      _c("time-input", { attrs: { time: this.time.outTime } }),
-      _vm._v(" "),
-      _c("span", [
-        _vm._v(_vm._s(this.timeDiff.hours + ":" + this.timeDiff.minutes))
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-bc0940ca", module.exports)
-  }
-}
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-8 text-center" }, [
-    _c("h4", [_vm._v(_vm._s(_vm.days[_vm.dayIndex]))]),
-    _vm._v(" "),
-    !_vm.empty
-      ? _c(
-          "div",
-          _vm._l(_vm.times, function(time, index) {
-            return _c("time-range", { key: index, attrs: { time: time } })
-          })
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c("button", { on: { click: _vm.addNewTime } }, [_vm._v("Add New Time")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4b755092", module.exports)
-  }
-}
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 30 */,
-/* 31 */
 /***/ (function(module, exports) {
 
 /*
@@ -13433,11 +13344,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -13456,7 +13363,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(37)
+var listToStyles = __webpack_require__(29)
 
 /*
 type StyleObject = {
@@ -13665,7 +13572,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 37 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /**
@@ -13698,9 +13605,67 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 38 */,
-/* 39 */,
-/* 40 */
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['time'],
+    data: function data() {
+        return {
+            AMPM: 'AM'
+        };
+    },
+
+    computed: {
+        hours: {
+            get: function get() {
+                var hour = Math.floor(this.time / 60);
+                if (hour > 12) {
+                    this.toggleAMPM();
+                    hour -= 12;
+                }
+                return hour;
+            },
+            set: function set(e) {
+                console.log(e);
+                //   return this.$store.commit('updateTime', e);
+            }
+        },
+        minutes: {
+            get: function get() {
+                return Math.round(this.time % 60);
+            }
+        }
+    },
+
+    methods: {
+        toggleAMPM: function toggleAMPM() {
+            if (this.AMPM === 'AM') {
+                this.AMPM = 'PM';
+            } else {
+                this.AMPM = 'AM';
+            }
+        },
+        updateHour: function updateHour() {
+            console.log("Updating hour");
+            //   this.$store.commit('');
+        }
+    }
+});
+
+/***/ }),
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -13709,26 +13674,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("span", { staticClass: "wrapper" }, [
     _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.hours,
-          expression: "hours"
-        }
-      ],
       staticClass: "time-input",
       attrs: { type: "number" },
-      domProps: { value: _vm.hours },
-      on: {
-        change: _vm.updateHour,
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.hours = $event.target.value
-        }
-      }
+      domProps: { value: _vm.hours }
     }),
     _vm._v(" "),
     _c("input", {
@@ -13762,48 +13710,75 @@ if (false) {
 }
 
 /***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(46);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(36)("10ba54c1", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34866fa8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TimeInput.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34866fa8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TimeInput.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("time-input", { attrs: { time: this.time.inTime } }),
+      _vm._v(" -> "),
+      _c("time-input", { attrs: { time: this.time.outTime } }),
+      _vm._v(" "),
+      _c("span", [
+        _vm._v(_vm._s(this.timeDiff.hours + ":" + this.timeDiff.minutes))
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-bc0940ca", module.exports)
+  }
 }
 
 /***/ }),
-/* 46 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(31)(false);
-// imports
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-8 text-center" }, [
+    _c("h4", [_vm._v(_vm._s(_vm.days[_vm.dayIndex]))]),
+    _vm._v(" "),
+    !_vm.empty
+      ? _c(
+          "div",
+          _vm._l(_vm.times, function(time, index) {
+            return _c("time-range", { key: index, attrs: { time: time } })
+          })
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.addNewTime } }, [_vm._v("Add New Time")])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4b755092", module.exports)
+  }
+}
 
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
 
-// module
-exports.push([module.i, "\nwrapper[data-v-34866fa8] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\n.time-input[data-v-34866fa8] {\n  width: 4rem;\n}\n.ampm[data-v-34866fa8] {\n  cursor: pointer;\n  padding: 3px 6px;\n}\n.ampm[data-v-34866fa8]:hover {\n    background-color: gray;\n}\n", ""]);
-
-// exports
-
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

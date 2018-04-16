@@ -10,6 +10,9 @@ const state = {
     createNewTime (state, data) {
       data.id = ++state.currentID;
       state.times.push(data)
+    },
+    updateTime (state, data) {
+      console.log(data);
     }
   }
   
