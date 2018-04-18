@@ -7,7 +7,6 @@
                 v-for='(day, index) in days' 
                 :key='day' 
                 :index="index"
-                @test="echo($event)"
             >
                 {{ day }}
             </Day>

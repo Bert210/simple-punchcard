@@ -1,14 +1,14 @@
 <template>
     <span class="wrapper">
-        <input class="time-input" type="number" :value="hours">
-        <input class="time-input" type="number" :value="minutes">
+        <input class="time-input" type="number" :value="hours" @change="updateHour">
+        <input class="time-input" type="number" :value="minutes" @change="updateMinute">
         <span class="ampm" @click="toggleAMPM()">{{ AMPM }}</span>
     </span>
 </template>
 
 <script>
 export default {
-  props: ['time'],
+  props: ['time', 'timeID'],
   data () {
       return ({
           AMPM: 'AM'
@@ -23,10 +23,6 @@ export default {
                   hour -= 12;
               }
               return hour;
-          },
-          set (e) {
-            console.log(e);
-            //   return this.$store.commit('updateTime', e);
           }
       },
       minutes: {
@@ -43,10 +39,14 @@ export default {
           }else {
               this.AMPM = 'AM';
           }
+          this.$emit('ampmChanged', this.AMPM);
       },
-      updateHour: function() {
-          console.log("Updating hour");
-        //   this.$store.commit('');
+      updateHour: function(e) {
+        this.$emit('hourChanged', parseInt(e.target.value));
+      },
+
+      updateMinute: function(e) {
+        this.$emit('minuteChanged', parseInt(e.target.value));
       }
   }
 }

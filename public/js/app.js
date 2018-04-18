@@ -12754,7 +12754,24 @@ var mutations = {
     state.times.push(data);
   },
   updateTime: function updateTime(state, data) {
-    console.log(data);
+    // let newTimes = state.times.filter(function(e) {
+    //   return e.id !== data.id;
+    // });
+
+    // newTimes.push(data);
+
+    // newTimes.sort(function(a, b) {
+    //   return a.id > b.id;
+    // })
+
+    var newTimes = state.times.map(function (e) {
+      if (e.id === data.id) {
+        return data;
+      }
+      return e;
+    });
+
+    state.times = newTimes;
   }
 };
 
@@ -12826,7 +12843,6 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Day__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Day___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Day__);
-//
 //
 //
 //
@@ -13006,12 +13022,7 @@ var render = function() {
             {
               key: day,
               staticClass: "list-group-item",
-              attrs: { index: index },
-              on: {
-                test: function($event) {
-                  _vm.echo($event)
-                }
-              }
+              attrs: { index: index }
             },
             [_vm._v("\n              " + _vm._s(day) + "\n          ")]
           )
@@ -13144,6 +13155,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TimeInput__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TimeInput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__TimeInput__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13167,6 +13192,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
       }
     }
+  },
+
+  methods: {
+    updateTime: function updateTime(e) {
+      this.$store.commit('updateTime', e);
+    },
+    updateHourIn: function updateHourIn(e) {
+      //Get the minutes
+      var minutes = Math.round(this.time.inTime % 60);
+      // Explode the old time and replace the "in time" with the new "in time"
+      var newTime = _extends({}, this.time, {
+        inTime: e * 60 + minutes
+        // Pass to updateTime so it can handle all the sending to the store
+      });this.updateTime(newTime);
+    },
+
+    updateHourOut: function updateHourOut(e) {
+      //Get the minutes
+      var minutes = Math.round(this.time.outTime % 60);
+      // Explode the old time and replace the "in time" with the new "in time"
+      var newTime = _extends({}, this.time, {
+        outTime: e * 60 + minutes
+        // Pass to updateTime so it can handle all the sending to the store
+      });this.updateTime(newTime);
+    },
+    updateMinuteIn: function updateMinuteIn(e) {
+      //Get the hours
+      var hours = Math.floor(this.time.inTime / 60);
+
+      // Explode the old time and replace the "in time" with the new "in time"
+      var newTime = _extends({}, this.time, {
+        inTime: hours * 60 + e
+        // Pass to updateTime so it can handle all the sending to the store
+      });this.updateTime(newTime);
+    },
+    updateMinuteOut: function updateMinuteOut(e) {},
+    updateAMPMIn: function updateAMPMIn(e) {},
+    updateAMPMOut: function updateAMPMOut(e) {}
   }
 });
 
@@ -13620,7 +13683,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['time'],
+    props: ['time', 'timeID'],
     data: function data() {
         return {
             AMPM: 'AM'
@@ -13636,10 +13699,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     hour -= 12;
                 }
                 return hour;
-            },
-            set: function set(e) {
-                console.log(e);
-                //   return this.$store.commit('updateTime', e);
             }
         },
         minutes: {
@@ -13656,10 +13715,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 this.AMPM = 'AM';
             }
+            this.$emit('ampmChanged', this.AMPM);
         },
-        updateHour: function updateHour() {
-            console.log("Updating hour");
-            //   this.$store.commit('');
+        updateHour: function updateHour(e) {
+            this.$emit('hourChanged', parseInt(e.target.value));
+        },
+
+        updateMinute: function updateMinute(e) {
+            this.$emit('minuteChanged', parseInt(e.target.value));
         }
     }
 });
@@ -13676,13 +13739,15 @@ var render = function() {
     _c("input", {
       staticClass: "time-input",
       attrs: { type: "number" },
-      domProps: { value: _vm.hours }
+      domProps: { value: _vm.hours },
+      on: { change: _vm.updateHour }
     }),
     _vm._v(" "),
     _c("input", {
       staticClass: "time-input",
       attrs: { type: "number" },
-      domProps: { value: _vm.minutes }
+      domProps: { value: _vm.minutes },
+      on: { change: _vm.updateMinute }
     }),
     _vm._v(" "),
     _c(
@@ -13720,9 +13785,23 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("time-input", { attrs: { time: this.time.inTime } }),
-      _vm._v(" -> "),
-      _c("time-input", { attrs: { time: this.time.outTime } }),
+      _c("time-input", {
+        attrs: { time: this.time.inTime },
+        on: {
+          hourChanged: _vm.updateHourIn,
+          minuteChanged: _vm.updateMinuteIn,
+          ampmChanged: _vm.updateAMPMIn
+        }
+      }),
+      _vm._v("\n     -> \n    "),
+      _c("time-input", {
+        attrs: { time: this.time.outTime },
+        on: {
+          hourChanged: _vm.updateHourOut,
+          minuteChanged: _vm.updateMinuteOut,
+          ampmChanged: _vm.updateAMPMOut
+        }
+      }),
       _vm._v(" "),
       _c("span", [
         _vm._v(_vm._s(this.timeDiff.hours + ":" + this.timeDiff.minutes))

@@ -1,6 +1,18 @@
 <template>
   <div>
-      <time-input :time="this.time.inTime"></time-input> -> <time-input :time="this.time.outTime"></time-input>
+      <time-input 
+        :time="this.time.inTime" 
+        @hourChanged="updateHourIn"
+        @minuteChanged="updateMinuteIn"
+        @ampmChanged="updateAMPMIn"
+      ></time-input>
+       -> 
+      <time-input 
+        :time="this.time.outTime"
+        @hourChanged="updateHourOut"
+        @minuteChanged="updateMinuteOut"
+        @ampmChanged="updateAMPMOut"
+      ></time-input>
       <span>{{ `${this.timeDiff.hours}:${this.timeDiff.minutes}` }}</span>
   </div>
 </template>
@@ -21,6 +33,50 @@ export default {
         }
       }
     }
+  },
+
+  methods: {
+    updateTime: function(e) {
+      this.$store.commit('updateTime', e);
+    },
+    updateHourIn: function (e){
+      //Get the minutes
+      const minutes = Math.round(this.time.inTime % 60);
+      // Explode the old time and replace the "in time" with the new "in time"
+      let newTime = {
+        ...this.time,
+        inTime: (e * 60) + minutes
+      }
+      // Pass to updateTime so it can handle all the sending to the store
+      this.updateTime(newTime);
+    },
+
+    updateHourOut: function(e) {
+      //Get the minutes
+      const minutes = Math.round(this.time.outTime % 60);
+      // Explode the old time and replace the "in time" with the new "in time"
+      let newTime = {
+        ...this.time,
+        outTime: (e * 60) + minutes
+      }
+      // Pass to updateTime so it can handle all the sending to the store
+      this.updateTime(newTime);
+    },
+    updateMinuteIn: function(e){
+      //Get the hours
+      const hours = Math.floor(this.time.inTime / 60);
+
+      // Explode the old time and replace the "in time" with the new "in time"
+      let newTime = {
+        ...this.time,
+        inTime: (hours * 60) + e
+      }
+      // Pass to updateTime so it can handle all the sending to the store
+      this.updateTime(newTime);
+    },
+    updateMinuteOut: function(e){},
+    updateAMPMIn:function(e){},
+    updateAMPMOut:function(e){}
   }
 }
 </script>

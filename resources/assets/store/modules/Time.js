@@ -12,7 +12,24 @@ const state = {
       state.times.push(data)
     },
     updateTime (state, data) {
-      console.log(data);
+      // let newTimes = state.times.filter(function(e) {
+      //   return e.id !== data.id;
+      // });
+
+      // newTimes.push(data);
+
+      // newTimes.sort(function(a, b) {
+      //   return a.id > b.id;
+      // })
+
+      let newTimes = state.times.map(function(e){
+        if(e.id === data.id){
+          return data;
+        }
+        return e;
+      });
+
+      state.times = newTimes;
     }
   }
   
