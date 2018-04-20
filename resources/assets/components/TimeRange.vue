@@ -74,9 +74,52 @@ export default {
       // Pass to updateTime so it can handle all the sending to the store
       this.updateTime(newTime);
     },
-    updateMinuteOut: function(e){},
-    updateAMPMIn:function(e){},
-    updateAMPMOut:function(e){}
+    updateMinuteOut: function(e){
+       //Get the hours
+      const hours = Math.floor(this.time.outTime / 60);
+
+      // Explode the old time and replace the "in time" with the new "in time"
+      let newTime = {
+        ...this.time,
+        outTime: (hours * 60) + e
+      }
+      // Pass to updateTime so it can handle all the sending to the store
+      this.updateTime(newTime);
+    },
+    updateAMPMIn:function(e){
+      let hours = Math.floor(this.time.inTime / 60);
+      const minutes = Math.round(this.time.inTime % 60);
+
+      if(e === 'AM'){
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      let newTime = {
+        ...this.time,
+        inTime: (hours * 60) + minutes
+      }
+
+      this.updateTime(newTime);
+    },
+    updateAMPMOut:function(e){
+      let hours = Math.floor(this.time.outTime / 60);
+      const minutes = Math.round(this.time.outTime % 60);
+
+      if(e === 'AM'){
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      let newTime = {
+        ...this.time,
+        outTime: (hours * 60) + minutes
+      }
+
+      this.updateTime(newTime);
+    }
   }
 }
 </script>

@@ -3,6 +3,7 @@
     <h4>{{ days[dayIndex] }}</h4>
     <div v-if="!empty">
       <time-range v-for="(time,index) in times" v-bind:key="index" :time='time'></time-range>
+      <div>Total Time: {{ `${totalTime.hours}:${totalTime.minutes}` }}</div>
     </div>
     <button @click="addNewTime">Add New Time</button>
   </div>
@@ -33,6 +34,22 @@ export default {
     empty: {
       get () {
         return this.times.length == 0;
+      }
+    },
+    totalTime: {
+      get () {
+        if(!this.empty){
+          // Loop through each time for this day
+          let totalMinutes = this.times.reduce((time, aggTime) => {
+            return time + (aggTime.outTime - aggTime.inTime);
+          }, 0);
+
+          return {
+            hours: Math.floor(totalMinutes / 60),
+            minutes: Math.round(totalMinutes % 60)
+          }
+        }
+        return {hours: 0, minutes:0}
       }
     }
   },

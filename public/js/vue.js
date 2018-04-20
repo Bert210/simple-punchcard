@@ -85,7 +85,7 @@ export default {
           get () {
               let hour = Math.floor(this.time / 60);
               if(hour > 12) {
-                  this.toggleAMPM();
+            //       this.toggleAMPM();
                   hour -= 12;
               }
               return hour;
@@ -211,9 +211,52 @@ export default {
       // Pass to updateTime so it can handle all the sending to the store
       this.updateTime(newTime);
     },
-    updateMinuteOut: function(e){},
-    updateAMPMIn:function(e){},
-    updateAMPMOut:function(e){}
+    updateMinuteOut: function(e){
+       //Get the hours
+      const hours = Math.floor(this.time.outTime / 60);
+
+      // Explode the old time and replace the "in time" with the new "in time"
+      let newTime = {
+        ...this.time,
+        outTime: (hours * 60) + e
+      }
+      // Pass to updateTime so it can handle all the sending to the store
+      this.updateTime(newTime);
+    },
+    updateAMPMIn:function(e){
+      let hours = Math.floor(this.time.inTime / 60);
+      const minutes = Math.round(this.time.inTime % 60);
+
+      if(e === 'AM'){
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      let newTime = {
+        ...this.time,
+        inTime: (hours * 60) + minutes
+      }
+
+      this.updateTime(newTime);
+    },
+    updateAMPMOut:function(e){
+      let hours = Math.floor(this.time.outTime / 60);
+      const minutes = Math.round(this.time.outTime % 60);
+
+      if(e === 'AM'){
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      let newTime = {
+        ...this.time,
+        outTime: (hours * 60) + minutes
+      }
+
+      this.updateTime(newTime);
+    }
   }
 }
 </script>
@@ -223,6 +266,7 @@ export default {
     <h4>{{ days[dayIndex] }}</h4>
     <div v-if="!empty">
       <time-range v-for="(time,index) in times" v-bind:key="index" :time='time'></time-range>
+      <div>Total Time: {{ `${totalTime.hours}:${totalTime.minutes}` }}</div>
     </div>
     <button @click="addNewTime">Add New Time</button>
   </div>
@@ -253,6 +297,22 @@ export default {
     empty: {
       get () {
         return this.times.length == 0;
+      }
+    },
+    totalTime: {
+      get () {
+        if(!this.empty){
+          // Loop through each time for this day
+          let totalMinutes = this.times.reduce((time, aggTime) => {
+            return time + (aggTime.outTime - aggTime.inTime);
+          }, 0);
+
+          return {
+            hours: Math.floor(totalMinutes / 60),
+            minutes: Math.round(totalMinutes % 60)
+          }
+        }
+        return {hours: 0, minutes:0}
       }
     }
   },

@@ -12746,24 +12746,11 @@ var state = {
 };
 
 var mutations = {
-  // addFile (state, file) {
-  //   state.list.push(file)
-  // },
   createNewTime: function createNewTime(state, data) {
     data.id = ++state.currentID;
     state.times.push(data);
   },
   updateTime: function updateTime(state, data) {
-    // let newTimes = state.times.filter(function(e) {
-    //   return e.id !== data.id;
-    // });
-
-    // newTimes.push(data);
-
-    // newTimes.sort(function(a, b) {
-    //   return a.id > b.id;
-    // })
-
     var newTimes = state.times.map(function (e) {
       if (e.id === data.id) {
         return data;
@@ -13106,6 +13093,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -13133,6 +13121,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     empty: {
       get: function get() {
         return this.times.length == 0;
+      }
+    },
+    totalTime: {
+      get: function get() {
+        if (!this.empty) {
+          // Loop through each time for this day
+          var totalMinutes = this.times.reduce(function (time, aggTime) {
+            return time + (aggTime.outTime - aggTime.inTime);
+          }, 0);
+
+          return {
+            hours: Math.floor(totalMinutes / 60),
+            minutes: Math.round(totalMinutes % 60)
+          };
+        }
+        return { hours: 0, minutes: 0 };
       }
     }
   },
@@ -13227,9 +13231,48 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         // Pass to updateTime so it can handle all the sending to the store
       });this.updateTime(newTime);
     },
-    updateMinuteOut: function updateMinuteOut(e) {},
-    updateAMPMIn: function updateAMPMIn(e) {},
-    updateAMPMOut: function updateAMPMOut(e) {}
+    updateMinuteOut: function updateMinuteOut(e) {
+      //Get the hours
+      var hours = Math.floor(this.time.outTime / 60);
+
+      // Explode the old time and replace the "in time" with the new "in time"
+      var newTime = _extends({}, this.time, {
+        outTime: hours * 60 + e
+        // Pass to updateTime so it can handle all the sending to the store
+      });this.updateTime(newTime);
+    },
+    updateAMPMIn: function updateAMPMIn(e) {
+      var hours = Math.floor(this.time.inTime / 60);
+      var minutes = Math.round(this.time.inTime % 60);
+
+      if (e === 'AM') {
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      var newTime = _extends({}, this.time, {
+        inTime: hours * 60 + minutes
+      });
+
+      this.updateTime(newTime);
+    },
+    updateAMPMOut: function updateAMPMOut(e) {
+      var hours = Math.floor(this.time.outTime / 60);
+      var minutes = Math.round(this.time.outTime % 60);
+
+      if (e === 'AM') {
+        hours -= 12;
+      } else {
+        hours += 12;
+      }
+
+      var newTime = _extends({}, this.time, {
+        outTime: hours * 60 + minutes
+      });
+
+      this.updateTime(newTime);
+    }
   }
 });
 
@@ -13695,7 +13738,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             get: function get() {
                 var hour = Math.floor(this.time / 60);
                 if (hour > 12) {
-                    this.toggleAMPM();
+                    //       this.toggleAMPM();
                     hour -= 12;
                 }
                 return hour;
@@ -13834,9 +13877,19 @@ var render = function() {
     !_vm.empty
       ? _c(
           "div",
-          _vm._l(_vm.times, function(time, index) {
-            return _c("time-range", { key: index, attrs: { time: time } })
-          })
+          [
+            _vm._l(_vm.times, function(time, index) {
+              return _c("time-range", { key: index, attrs: { time: time } })
+            }),
+            _vm._v(" "),
+            _c("div", [
+              _vm._v(
+                "Total Time: " +
+                  _vm._s(_vm.totalTime.hours + ":" + _vm.totalTime.minutes)
+              )
+            ])
+          ],
+          2
         )
       : _vm._e(),
     _vm._v(" "),

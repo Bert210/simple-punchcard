@@ -19,7 +19,7 @@ export default {
           get () {
               let hour = Math.floor(this.time / 60);
               if(hour > 12) {
-                  this.toggleAMPM();
+            //       this.toggleAMPM();
                   hour -= 12;
               }
               return hour;
