@@ -25,7 +25,7 @@ export default {
     computed: {
         activeDay: {
             get () { return this.$store.state.Day.activeDay; }
-        }
+        },
     },
     components: { Day },
     methods: {

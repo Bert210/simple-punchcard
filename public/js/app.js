@@ -12876,6 +12876,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(38)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(18)
@@ -12884,7 +12888,7 @@ var __vue_template__ = __webpack_require__(19)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -12941,6 +12945,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isActive: function isActive() {
             return this.$store.state.Day.activeDay === this.dayIndex;
+        },
+        worked: {
+            get: function get() {
+                var _this = this;
+
+                return this.$store.state.Time.times.filter(function (d) {
+                    return d.dayID === _this.dayIndex;
+                }).length > 0;
+            }
+        },
+        totalTime: {
+            get: function get() {
+                var _this2 = this;
+
+                if (this.worked) {
+                    var times = this.$store.state.Time.times.filter(function (d) {
+                        return d.dayID === _this2.dayIndex;
+                    });
+                    // Loop through each time for this day
+                    var totalMinutes = times.reduce(function (time, aggTime) {
+                        return time + (aggTime.outTime - aggTime.inTime);
+                    }, 0);
+
+                    return {
+                        hours: Math.floor(totalMinutes / 60),
+                        minutes: Math.round(totalMinutes % 60)
+                    };
+                }
+                return { hours: 0, minutes: 0 };
+            }
         }
     },
     methods: {
@@ -12962,14 +12996,24 @@ var render = function() {
   return _c(
     "div",
     {
-      class: { active: _vm.isActive },
+      class: { active: _vm.isActive, "has-time": _vm.worked },
       on: {
         click: function($event) {
           _vm.echo()
         }
       }
     },
-    [_vm._t("default")],
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _vm.worked
+        ? _c("span", { staticClass: "total-time" }, [
+            _vm._v(
+              "- " + _vm._s(_vm.totalTime.hours + ":" + _vm.totalTime.minutes)
+            )
+          ])
+        : _vm._e()
+    ],
     2
   )
 }
@@ -13911,6 +13955,49 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(39);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(28)("49876772", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7eebe907\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Day.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7eebe907\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Day.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(27)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.total-time {\n  font-size: 10px;\n}\n.has-time {\n  font-weight: bold;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

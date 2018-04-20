@@ -1,5 +1,5 @@
 <template>
-  <div :class="{active: isActive}" @click="echo()"><slot></slot></div>
+  <div :class="{active: isActive, 'has-time': worked}" @click="echo()"><slot></slot> <span class="total-time" v-if="worked">- {{ `${totalTime.hours}:${totalTime.minutes}` }}</span></div>
 </template>
 
 <script>
@@ -15,6 +15,28 @@ export default {
       },
       isActive: function() {
           return this.$store.state.Day.activeDay === this.dayIndex;
+      },
+      worked: {
+          get () {
+              return this.$store.state.Time.times.filter(d => { return d.dayID === this.dayIndex}).length > 0;
+          }
+      },
+      totalTime: {
+          get () {
+            if(this.worked){
+                let times = this.$store.state.Time.times.filter(d => { return d.dayID === this.dayIndex});
+                // Loop through each time for this day
+                let totalMinutes = times.reduce((time, aggTime) => {
+                    return time + (aggTime.outTime - aggTime.inTime);
+                }, 0);
+
+                return {
+                  hours: Math.floor(totalMinutes / 60),
+                  minutes: Math.round(totalMinutes % 60)
+                }
+            }
+            return {hours: 0, minutes:0}
+          }
       }
   },
   methods: {
@@ -25,6 +47,15 @@ export default {
   }
 }
 </script>
+
+<style>
+  .total-time {
+    font-size: 10px;
+  }
+  .has-time {
+    font-weight: bold;
+  }
+</style>
 
 <template>
   <div class="col-3 text-center" style="border-right: 1px solid #000">
@@ -53,7 +84,7 @@ export default {
     computed: {
         activeDay: {
             get () { return this.$store.state.Day.activeDay; }
-        }
+        },
     },
     components: { Day },
     methods: {
