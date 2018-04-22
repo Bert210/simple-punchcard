@@ -29,7 +29,7 @@
                 <time-view></time-view>
             </div>
             <div class="row">
-                <div class="col-12">Total: </div>
+                <total-time></total-time>
             </div>
         </div>
 

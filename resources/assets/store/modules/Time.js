@@ -1,34 +1,38 @@
 const state = {
-    currentID: 0,
-    times: []
-  }
-  
-  const mutations = {
-    createNewTime (state, data) {
-      data.id = ++state.currentID;
-      state.times.push(data)
-    },
-    updateTime (state, data) {
-      let newTimes = state.times.map(function(e){
-        if(e.id === data.id){
-          return data;
-        }
-        return e;
-      });
+  currentID: 0,
+  times: []
+}
 
-      state.times = newTimes;
-    }
+const mutations = {
+  createNewTime(state, data) {
+    data.id = ++state.currentID;
+    state.times.push(data)
+  },
+  updateTime(state, data) {
+    let newTimes = state.times.map(function (e) {
+      if (e.id === data.id) {
+        return data;
+      }
+      return e;
+    });
+
+    state.times = newTimes;
+  },
+
+  deleteTime(state, idToDelete) {
+    state.times = state.times.filter(t => t.id !== idToDelete);
   }
-  
-  const actions = {
-    // someAsyncTask ({ commit }) {
-    //   // do something async
-    //   commit('INCREMENT_MAIN_COUNTER')
-    // }
-  }
-  
-  export default {
-    state,
-    mutations,
-    actions
-  }
+}
+
+const actions = {
+  // someAsyncTask ({ commit }) {
+  //   // do something async
+  //   commit('INCREMENT_MAIN_COUNTER')
+  // }
+}
+
+export default {
+  state,
+  mutations,
+  actions
+}

@@ -14,6 +14,7 @@
         @ampmChanged="updateAMPMOut"
       ></time-input>
       <span>{{ `${this.timeDiff.hours}:${this.timeDiff.minutes}` }}</span>
+      <span class="btn btn-danger btn-sm" @click="deleteTime(time)">&times;</span>
   </div>
 </template>
 
@@ -119,6 +120,9 @@ export default {
       }
 
       this.updateTime(newTime);
+    },
+    deleteTime: function(e){
+      this.$store.commit('deleteTime', e.id);
     }
   }
 }

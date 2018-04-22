@@ -182,6 +182,7 @@ export default {
         @ampmChanged="updateAMPMOut"
       ></time-input>
       <span>{{ `${this.timeDiff.hours}:${this.timeDiff.minutes}` }}</span>
+      <span class="btn btn-danger btn-sm" @click="deleteTime(time)">&times;</span>
   </div>
 </template>
 
@@ -287,6 +288,9 @@ export default {
       }
 
       this.updateTime(newTime);
+    },
+    deleteTime: function(e){
+      this.$store.commit('deleteTime', e.id);
     }
   }
 }
@@ -295,8 +299,8 @@ export default {
 <template>
   <div class="col-8 text-center">
     <h4>{{ days[dayIndex] }}</h4>
-    <div v-if="!empty">
-      <time-range v-for="(time,index) in times" v-bind:key="index" :time='time'></time-range>
+    <div class="time-wrapper" v-if="!empty">
+      <time-range class="time-range" v-for="(time,index) in times" v-bind:key="index" :time='time'></time-range>
       <div>Total Time: {{ `${totalTime.hours}:${totalTime.minutes}` }}</div>
     </div>
     <button @click="addNewTime">Add New Time</button>
@@ -351,11 +355,56 @@ export default {
     addNewTime: function() {
       this.$store.commit("createNewTime", {
         dayID: this.dayIndex,
-        inTime: 8*60+23,
-        outTime: (1+12)*60+55
+        inTime: 0,
+        outTime: 0
       })
     }
   }
 }
 </script>
+
+<style>
+.time-range {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted lightgray;
+
+}
+.time-wrapper > div:nth-last-child(2){
+  border: none !important;
+  /* background-color: magenta; */
+}
+</style>
+
+
+<template>
+  <div class="total-time-wrapper">
+      Total Time: {{`${total.hours}h ${total.minutes}m`}}
+  </div>
+</template>
+
+<script>
+export default {
+  computed: {
+      total: {
+          get () {
+              let tt = this.$store.state.Time.times.reduce( (currentTotal, item) => currentTotal + (item.outTime - item.inTime), 0);
+              return { 
+                hours: Math.floor(tt / 60),
+                minutes: Math.round(tt % 60)
+              }
+          }
+      }
+  }
+}
+</script>
+
+
+<style>
+    .total-time-wrapper {
+        width: 100%;
+        text-align: center;
+        font-size: 3rem;
+    }
+</style>
 
